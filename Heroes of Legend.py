@@ -11,6 +11,7 @@ class Table:
     def __init__(self, numDice, typeDice, tableList = []):
         self.numDice = numDice
         self.typeDice = typeDice
+        self.modDice = modDice
         self.tableList = tableList
 
     def roll(self):
