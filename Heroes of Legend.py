@@ -16,6 +16,11 @@ class Table:
         else:
             return random.choice(self.tableList)
 
+def rollDice(numDice, typeDice):
+    result = 0
+    for i in range(numDice):
+        result += random.randint(1, typeDice)
+    return result
 
 def main():
     exList = ["Item 1", "Item 2", "Item 3"]
@@ -23,6 +28,8 @@ def main():
     testTable2 = Table(exList)
     print (testTable1.roll())
     print (testTable2.roll())
+    print str(rollDice(1, 6))
+    print str(rollDice(1, 100))
 
 if __name__ == "__main__":
     main()
