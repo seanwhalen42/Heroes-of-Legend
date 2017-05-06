@@ -3,9 +3,10 @@ import random
 
 class Character:
 
-    def __init__(self, race = []):
+    def __init__(self, race = [], culture = "", cuMod = 0):
         self.race = race
-
+        self.culture = culture
+        self.cuMod = cuMod
 
 
 def rollDice(numDice, typeDice):
@@ -113,13 +114,54 @@ def table101c():
 
     else:
         table101c()
-                
+
+def table102(character):
+    diceRoll = rollDice(1, 100)
+    if 1 <= diceRoll <= 5:
+        character.culture = "Degenerate Civilized"
+        character.cuMod = 0
+
+    elif 6 <= diceRoll <= 15:
+        character.culture = "Primitive"
+        character.cuMod = 0
+
+    elif 16 <= diceRoll <= 19:
+        character.culture = "Regressive Civilized"
+        character.cuMod = 2
+
+    elif 20 <= diceRoll <= 34:
+        character.culture = "Nomadic"
+        character.cuMod = 6
+
+    elif 35 <= diceRoll <= 64:
+        character.culture = "Barbaric"
+        character.cuMod = 2
+
+    elif 65 <= diceRoll <= 77:
+        character.culture = "Developing Civilized"
+        character.cuMod = 6
+
+    elif 78 <= diceRoll <= 87:
+        character.culture = "Dynamic Civilized"
+        character.cuMod = 10
+
+    elif 88 <= diceRoll <= 92:
+        character.culture = "Stagnant Civilized"
+        character.cuMod = 4
+
+    else:
+        character.culture = "Decadent Civilized"
+        character.cuMod = 7
+    
 def main():
     character = Character()
     race  = table101a()
     character.race = race
     print (character.race)
     table101c()
+    table102(character)
+    print (character.culture)
+    print (character.cuMod)
 
 if __name__ == "__main__":
     main()
