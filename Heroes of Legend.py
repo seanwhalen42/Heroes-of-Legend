@@ -4,13 +4,17 @@ import random
 class Character:
 
     def __init__(self, race = [], culture = "", cuMod = 0, social = "",
-                 solMod = 0, familyHead = ""):
-        self.race = race
-        self.culture = culture
+                 solMod = 0, familyHead = "", siblings = 0, illSiblings = 0,
+                 relations = []):
+        self.race = race 
+        self.culture = culture 
         self.cuMod = cuMod
-        self.social = social
+        self.social = social #social standing
         self.solMod = solMod
-        self.familyHead = familyHead
+        self.familyHead = familyHead #head of family
+        self.siblings = siblings
+        self.illSiblings = illSiblings #illegitimate siblings
+        self.relations = relations #other relations
 
 def rollDice(numDice, typeDice):
     """Rolls numDice of typeDice"""
@@ -190,7 +194,7 @@ def table104a(character):
         print ("This character is illegitimate")
         character.solMod -= rollDice(1, 4)
 
-def table104b(character, reroll = false, adopt = false):
+def table104b(character, reroll = False, adopt = False):
     if reroll:
         headRoll = rollDice(1, 16)
 
@@ -245,10 +249,10 @@ def table104b(character, reroll = false, adopt = false):
 
     elif headRoll == 16:
         guardianRoll = rollDice(1, 20)
-        if guradianRoll <= 8:
+        if guardianRoll <= 8:
             table747(character)
         else:
-            table101b(character, false, true)
+            table104b(character, False, True)
 
     elif headRoll == 17:
         character.familyHead = "None known"
@@ -264,15 +268,73 @@ def table104b(character, reroll = false, adopt = false):
         table104d(character)
 
     else:
-        table104b(character, true, false)
+        table104b(character, True, False)
         addRel = rollDice(1, 6)
         table104d(character, addRel)
-            
+
+def table104c(character):
+    diceRoll = rollDice(1, 20)
+
+    if diceRoll <= 2:
+        character.sinblings += 0
+
+    elif 3 <= diceRoll <= 8:
+        character.siblings += rollDice(1, 3)
+
+    elif 9 <= diceRoll <= 13:
+        character.siblings += (rollDice(1, 3) + 1)
+
+    elif 14 <= diceRoll <= 16:
+        character.siblings += (rollDice(1, 4) + 2)
+
+    elif 17 <= diceRoll <= 18:
+        character.siblings += rollDice(2, 4)
+
+    elif diceRoll == 19:
+        character.siblings += rollDice(1, 4)
+        table104c(character)
+
+    elif diceRoll == 20:
+        character.illSiblings += rollDice(1, 3)
+        table104c(character)
+
+def table104d(character, num, reroll = False):
+    for i in range(num):
+        diceRoll = rollDice(2, 8)
+        if 2 <= diceRoll <= 3:
+            character.relations.append("Distant Relative")
+
+        elif diceRoll == 4:
+            character.relations.append("2nd Cousin")
+
+        elif 5 <= diceRoll <= 8:
+            hiLoRoll = diceRoll(1, 2)
+            if hiLoRoll == 1:
+                character.realtions.append("Brother")
+            else:
+                character.relations.append("Sister")
+
+        elif diceRoll == 9:
+            character.relations.append("Cousin")
+
+        elif 10 <= diceRoll <= 11:
+            character.relations.append("Great Aunt or Uncle")
+
+        elif diceRoll == 12:
+            character.relations.append("Great Grandparent")
+
+        elif diceRoll == 13:
+            character.realtions.append("Ancestor")
+
+        else:
+            if not reroll:
+                table104d(character, 1, True)
+                character.relations[-1] = "Mysterious " + character.relations[-1]
+                print ("GM: 967-104d") 
 
 def main():
     character = Character()
-    race  = table101a()
-    character.race = race
+    character.race = table101a()
     print (character.race)
     table101c()
     table102(character)
@@ -281,6 +343,14 @@ def main():
     table103(character)
     print (character.social)
     print (character.solMod)
+    table104a(character)
+    table104b(character)
+    print (character.familyHead)
+    print (character.relations)
+    table104c(character)
+    print (character.siblings)
+    print (character.illSiblings)
+    
 
 if __name__ == "__main__":
     main()
