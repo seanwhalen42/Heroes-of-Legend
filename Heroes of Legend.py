@@ -3,12 +3,14 @@ import random
 
 class Character:
 
-    def __init__(self, race = [], culture = "", cuMod = 0, social = "" solMod = 0):
+    def __init__(self, race = [], culture = "", cuMod = 0, social = "",
+                 solMod = 0, familyHead = ""):
         self.race = race
         self.culture = culture
         self.cuMod = cuMod
         self.social = social
         self.solMod = solMod
+        self.familyHead = familyHead
 
 def rollDice(numDice, typeDice):
     """Rolls numDice of typeDice"""
@@ -177,7 +179,95 @@ def table103(character):
         character.solMod = 7
 
     else:
-        #Nobility
+        #Nobility - needs work
+        character.social = "Nobility"
+        character.solMod = 10
+
+def table104a(character):
+    legitRoll = rollDice(1, 20)
+
+    if legitRoll >= 19:
+        print ("This character is illegitimate")
+        character.solMod -= rollDice(1, 4)
+
+def table104b(character, reroll = false, adopt = false):
+    if reroll:
+        headRoll = rollDice(1, 16)
+
+    elif adopt:
+        headRoll = rollDice(1, 15)
+    
+    else:
+        headRoll = rollDice(1, 20)
+    hiLoRoll = rollDice(1, 2)
+
+    if 1 <= headRoll <= 9:
+        if adopt:
+            character.familyHead = "Two Adoptive Parents"
+        else:
+            character.familyHead = "Two Parents"
+
+    elif 10 <= headRoll <= 12:
+        if hiLoRoll == 1:
+            if adopt:
+                character.FamilyHead = "Adoptive Father"
+            else:
+                character.familyHead = "Father"
+        else:
+            if adopt:
+                character.familyHead = "Adoptive Mother"
+            else:
+                character.familyHead = "Mother"
+
+    elif headRoll == 13:
+        if adopt:
+            character.familyHead = "Adoptive Aunt and/or Uncle"
+        else:
+            character.familyHead = "Aunt and/or Uncle"
+
+    elif headRoll == 14:
+        if hiLoRoll == 1:
+            if adopt:
+                character.familyHead = "Adoptive Older Brother"
+            else:
+                character.familyHead = "Older Brother"
+        else:
+            if adopt:
+                character.familyHead = "Adoptive Older Sister"
+            else:
+                character.familyHead = "Older Sister"
+
+    elif headRoll == 15:
+        if adopt:
+            character.familyHead = "Adoptive Grandparents"
+        else:
+            character.familyHead = "Grandparents"
+
+    elif headRoll == 16:
+        guardianRoll = rollDice(1, 20)
+        if guradianRoll <= 8:
+            table747(character)
+        else:
+            table101b(character, false, true)
+
+    elif headRoll == 17:
+        character.familyHead = "None known"
+        character.social = "Destitute"
+
+    elif headRoll == 18:
+        character.familyHead = "Orphanage"
+        character.social = "Poor"
+        dmRoll = rollDice(1, 4)
+        print ("GM: Table 968-104b-" + str(dmRoll))
+
+    elif headRoll == 19:
+        table104d(character)
+
+    else:
+        table104b(character, true, false)
+        addRel = rollDice(1, 6)
+        table104d(character, addRel)
+            
 
 def main():
     character = Character()
@@ -188,6 +278,9 @@ def main():
     table102(character)
     print (character.culture)
     print (character.cuMod)
+    table103(character)
+    print (character.social)
+    print (character.solMod)
 
 if __name__ == "__main__":
     main()
