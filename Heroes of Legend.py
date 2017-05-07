@@ -3,11 +3,12 @@ import random
 
 class Character:
 
-    def __init__(self, race = [], culture = "", cuMod = 0):
+    def __init__(self, race = [], culture = "", cuMod = 0, social = "" solMod = 0):
         self.race = race
         self.culture = culture
         self.cuMod = cuMod
-
+        self.social = social
+        self.solMod = solMod
 
 def rollDice(numDice, typeDice):
     """Rolls numDice of typeDice"""
@@ -152,7 +153,32 @@ def table102(character):
     else:
         character.culture = "Decadent Civilized"
         character.cuMod = 7
-    
+
+def table103(character):
+    diceRoll = rollDice(1, 100) + character.cuMod
+    if 1 <= diceRoll <= 15:
+        character.social = "Destitute"
+        character.solMod = 0
+
+    elif 16 <= diceRoll <= 40:
+        character.social = "Poor"
+        character.solMod = 2
+
+    elif 41 <= diceRoll <= 85:
+        character.social = "Comfortable"
+        character.solMod = 4
+
+    elif 86 <= diceRoll <= 95:
+        character.social = "Well-to-Do"
+        character.solMod = 5
+
+    elif 96 <= diceRoll <= 99:
+        character.social = "Wealthy"
+        character.solMod = 7
+
+    else:
+        #Nobility
+
 def main():
     character = Character()
     race  = table101a()
