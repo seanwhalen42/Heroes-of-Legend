@@ -330,7 +330,11 @@ def table104d(character, num, reroll = False):
             if not reroll:
                 table104d(character, 1, True)
                 character.relations[-1] = "Mysterious " + character.relations[-1]
-                print ("GM: 967-104d") 
+                print ("GM: 967-104d")
+            else:
+                table104d(character, 1, True)
+
+#Table 747 needs to be done next
 
 def main():
     character = Character()
