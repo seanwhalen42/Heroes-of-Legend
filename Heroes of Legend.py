@@ -334,7 +334,40 @@ def table104d(character, num, reroll = False):
             else:
                 table104d(character, 1, True)
 
-#Table 747 needs to be done next
+def table747(character):
+    diceRoll = rollDice(1, 20)
+    if 1 <= diceRoll <= 5:
+        table757(character, True)
+
+    elif 6 <= diceRoll <= 7:
+        character.familyHead("Orphanage")
+
+    elif diceRoll == 8:
+        character.familyHead = table745()
+
+    elif diceRoll == 9:
+        character.familyHead = table751()
+
+    elif diceRoll == 10:
+        table104b(character, False, True)
+
+    elif diceRoll == 11:
+        character.familyHead = table749()
+
+    elif diceRoll == 12:
+        #table 639: 1d3 religious events
+
+    elif diceRoll == 13:
+        character.familyHead("None")
+
+    elif diceRoll == 14:
+        character.familyHead = "Beggars, thieves, and outcasts"
+        character.social = "Destitute"
+
+    elif #Finish this later
+
+def table757(character, noParents):
+    
 
 def main():
     character = Character()
