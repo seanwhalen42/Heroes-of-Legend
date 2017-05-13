@@ -5,7 +5,7 @@ class Character:
 
     def __init__(self, race = [], culture = "", cuMod = 0, social = "",
                  solMod = 0, familyHead = "", siblings = 0, illSiblings = 0,
-                 relations = []):
+                 relations = [], birthplace = "", biMod = 0):
         self.race = race 
         self.culture = culture 
         self.cuMod = cuMod
@@ -15,6 +15,8 @@ class Character:
         self.siblings = siblings
         self.illSiblings = illSiblings #illegitimate siblings
         self.relations = relations #other relations
+        self.birthplace = birthplace
+        self.biMod = biMod
 
 def rollDice(numDice, typeDice):
     """Rolls numDice of typeDice"""
@@ -333,6 +335,7 @@ def table104d(character, num, reroll = False):
                 print ("GM: 967-104d")
             else:
                 table104d(character, 1, True)
+    
 
 def table747(character):
     diceRoll = rollDice(1, 20)
@@ -355,6 +358,7 @@ def table747(character):
         character.familyHead = table749()
 
     elif diceRoll == 12:
+        character.familyHead = "Monastary"
         #table 639: 1d3 religious events
 
     elif diceRoll == 13:
@@ -364,10 +368,31 @@ def table747(character):
         character.familyHead = "Beggars, thieves, and outcasts"
         character.social = "Destitute"
 
-    elif #Finish this later
+    elif diceRoll == 15:
+        character.familyHead = "Criminal"
+        #865 Crimes for type of criminal
+        #631 Underworld Events
 
-def table757(character, noParents):
-    
+    elif diceRoll == 16:
+        character.familyHead = ("Character is passed from relative to "
+                               "relative until reaching the age of maturity")
+
+    elif diceRoll == 17:
+        character.familyHead = "Adventurer"
+        #750 Adventurers
+
+    elif diceRoll == 18:
+        years = rollDice(1, 10)
+        character.familyHead = ("Character dissapears for " + years + " years, "
+                               "returning older, but cannot remember what "
+                               "happened during that time.")
+        print("GM: 968-747")
+
+    elif diceRoll == 19:
+        character.familyHead = "Beasts"
+
+    else:
+        #Roll twice on this table and combine the result in an imaginatve way
 
 def main():
     character = Character()
