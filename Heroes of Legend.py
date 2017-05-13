@@ -393,6 +393,7 @@ def table747(character):
 
     else:
         #Roll twice on this table and combine the result in an imaginatve way
+        pass
 
 def main():
     character = Character()
