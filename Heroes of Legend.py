@@ -340,7 +340,7 @@ def table747(character):
         table757(character, True)
 
     elif 6 <= diceRoll <= 7:
-        character.familyHead("Orphanage")
+        character.familyHead = "Orphanage"
 
     elif diceRoll == 8:
         character.familyHead = table745()
@@ -358,7 +358,7 @@ def table747(character):
         #table 639: 1d3 religious events
 
     elif diceRoll == 13:
-        character.familyHead("None")
+        character.familyHead = "None"
 
     elif diceRoll == 14:
         character.familyHead = "Beggars, thieves, and outcasts"
