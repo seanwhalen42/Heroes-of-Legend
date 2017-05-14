@@ -267,7 +267,7 @@ def table104b(character, reroll = False, adopt = False):
         print ("GM: Table 968-104b-" + str(dmRoll))
 
     elif headRoll == 19:
-        table104d(character)
+        table104d(character, False, False)
 
     else:
         table104b(character, True, False)
@@ -335,6 +335,109 @@ def table104d(character, num, reroll = False):
                 print ("GM: 967-104d")
             else:
                 table104d(character, 1, True)
+
+def table105b(character, foreigner):
+    diceRoll = rollDice(1, 20)
+    if 1 <= diceRoll <= 6:
+        character.birthPlace = "In the character's family home "
+        character.biMod = 2
+
+    elif diceRoll == 7:
+        character.birthPlace = "In a friend's home "
+        character.biMod = 2
+
+    elif diceRoll == 8:
+        character.birthPlace = "In a hospital or healer's guild hall "
+        character.biMod = 0
+
+    elif diceRoll == 9:
+        character.birthPlace = "In a voyaging ship "
+        character.biMod = 8
+
+    elif diceRoll == 10:
+        character.birthPlace = "In a carriage or wagon while travelling "
+        character.biMod = 8
+
+    elif diceRoll == 11:
+        character.birthPlace = "In a common barn "
+        character.biMod = 8
+
+    elif 12 <= diceRoll <= 13:
+        if not foreigner:
+            table105b(character, True)
+            character.birthPlace += "in a foreign land."
+            character.biMod += 5
+
+    elif diceRoll == 14:
+        character.birthPlace = "In a cave "
+        character.biMod = 10
+
+    elif diceRoll == 15:
+        character.birthPlace = "In the middle of a field "
+        character.biMod = 8
+
+    elif diceRoll == 16:
+        character.birthPlace = "In a forest "
+        character.birthMod = 9
+
+    else:
+        table105c(character)
+
+def table105c(character):
+    diceRoll = rollDice(1, 20)
+    if diceRoll == 1:
+        table105c(character)
+        table105c(character)
+
+    elif diceRoll == 2:
+        character.birthPlace += "In a prison cell "
+        character.biMod += 10
+
+    elif diceRoll == 3:
+        character.birthPlace += "In the temple of a good deity "
+        character.biMod += 22
+
+    elif diceRoll == 4:
+        battleRoll = rollDice(1, 6)
+        if battleRoll == 6:
+            character.birthPlace += "On a battlefield "
+            character.biMod += 15
+        else:
+            character.birthPlace += "In a war camp "
+            character.biMod += 15
+
+    elif diceRoll == 5:
+        character.birthPlace += "In an alley "
+        character.biMod += 12
+
+    elif diceRoll == 6:
+        character.birthPlace += "In a brothel "
+        character.biMod += 9
+
+    elif diceRoll == 7:
+        character.birthPlace += "In the palace of a local ruler "
+        character.biMod += 9
+
+    elif diceRoll == 8:
+        character.birthPlace += "In the palace of the ruler of the country "
+        character.biMod += 12
+
+    elif diceRoll == 9:
+        character.birthPlace += "In the palace of a powerful evil person, ruler or creature "
+        character.biMod += 22
+
+    elif diceRoll == 10:
+        character.birthPlace += "In a bar, tavern, or alehouse "
+        character.biMod += 9
+
+    elif diceRoll == 11:
+        character.birthPlace += "In the sewers "
+        character.biMod += 17
+
+    elif diceRoll == 12:
+        character.birthPlace += "In a thieves' den "
+        character.biMod += 12
+
     
 
 def table747(character):
@@ -413,6 +516,9 @@ def main():
     table104c(character)
     print (character.siblings)
     print (character.illSiblings)
+    table105b(character, False)
+    print (character.birthPlace)
+    print (character.biMod)
     
 
 if __name__ == "__main__":
