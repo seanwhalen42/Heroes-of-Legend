@@ -278,7 +278,7 @@ def table104c(character):
     diceRoll = rollDice(1, 20)
 
     if diceRoll <= 2:
-        character.sinblings += 0
+        character.siblings += 0
 
     elif 3 <= diceRoll <= 8:
         character.siblings += rollDice(1, 3)
@@ -310,7 +310,7 @@ def table104d(character, num, reroll = False):
             character.relations.append("2nd Cousin")
 
         elif 5 <= diceRoll <= 8:
-            hiLoRoll = diceRoll(1, 2)
+            hiLoRoll = rollDice(1, 2)
             if hiLoRoll == 1:
                 character.realtions.append("Brother")
             else:
@@ -326,7 +326,7 @@ def table104d(character, num, reroll = False):
             character.relations.append("Great Grandparent")
 
         elif diceRoll == 13:
-            character.realtions.append("Ancestor")
+            character.relations.append("Ancestor")
 
         else:
             if not reroll:
@@ -338,6 +338,7 @@ def table104d(character, num, reroll = False):
 
 def table105b(character, foreigner):
     diceRoll = rollDice(1, 20)
+    print (diceRoll)
     if 1 <= diceRoll <= 6:
         character.birthPlace = "In the character's family home "
         character.biMod = 2
@@ -384,61 +385,95 @@ def table105b(character, foreigner):
         table105c(character)
 
 def table105c(character):
-    diceRoll = rollDice(1, 20)
+    diceRoll = 4#rollDice(1, 20)
     if diceRoll == 1:
         table105c(character)
         table105c(character)
 
     elif diceRoll == 2:
-        character.birthPlace += "In a prison cell "
+        character.birthplace += "In a prison cell "
         character.biMod += 10
 
     elif diceRoll == 3:
-        character.birthPlace += "In the temple of a good deity "
+        character.birthplace += "In the temple of a good deity "
         character.biMod += 22
 
     elif diceRoll == 4:
         battleRoll = rollDice(1, 6)
+        print ("battleRoll: " + battleRoll)
         if battleRoll == 6:
-            character.birthPlace += "On a battlefield "
+            character.birthplace += "On a battlefield "
             character.biMod += 15
         else:
-            character.birthPlace += "In a war camp "
+            #this block is not being reached
+            character.birthplace += "In a war camp "
             character.biMod += 15
 
     elif diceRoll == 5:
-        character.birthPlace += "In an alley "
+        character.birthplace += "In an alley "
         character.biMod += 12
 
     elif diceRoll == 6:
-        character.birthPlace += "In a brothel "
+        character.birthplace += "In a brothel "
         character.biMod += 9
 
     elif diceRoll == 7:
-        character.birthPlace += "In the palace of a local ruler "
+        character.birthplace += "In the palace of a local ruler "
         character.biMod += 9
 
     elif diceRoll == 8:
-        character.birthPlace += "In the palace of the ruler of the country "
+        character.birthplace += "In the palace of the ruler of the country "
         character.biMod += 12
 
     elif diceRoll == 9:
-        character.birthPlace += "In the palace of a powerful evil person, ruler or creature "
+        character.birthplace += "In the palace of a powerful evil person, ruler or creature "
         character.biMod += 22
 
     elif diceRoll == 10:
-        character.birthPlace += "In a bar, tavern, or alehouse "
+        character.birthplace += "In a bar, tavern, or alehouse "
         character.biMod += 9
 
     elif diceRoll == 11:
-        character.birthPlace += "In the sewers "
+        character.birthplace += "In the sewers "
         character.biMod += 17
 
     elif diceRoll == 12:
-        character.birthPlace += "In a thieves' den "
+        character.birthplace += "In a thieves' den "
         character.biMod += 12
 
-    
+    elif diceRoll == 13:
+        character.birthplace += "In the lair of " + table749()
+        character.biMod += 9
+
+    elif diceRoll == 14:
+        character.birthplace += "DM: Table 968-105 "
+        character.biMod += 32
+
+    elif diceRoll == 15:
+        character.birthplace += "In the temple of an evil or malignant deity "
+        character.biMod += 27
+
+    elif diceRoll == 16:
+        character.birthplace += "On another plane of reality "
+        character.biMod += 22
+
+    elif diceRoll == 17:
+        character.birthplace += "In another time period "
+        character.biMod += 17
+
+    elif diceRoll == 18:
+        character.birthplace += "On a ship at sea "
+        character.biMod += 9
+
+    elif diceRoll == 19:
+        character.birthplace += "In a prison cell "
+        character.biMod += 16
+
+    else:
+        character.birthplace += "In a wizard's laboratory "
+        character.biMod += 27
+
+
 
 def table747(character):
     diceRoll = rollDice(1, 20)
@@ -517,7 +552,7 @@ def main():
     print (character.siblings)
     print (character.illSiblings)
     table105b(character, False)
-    print (character.birthPlace)
+    print (character.birthplace)
     print (character.biMod)
     
 
