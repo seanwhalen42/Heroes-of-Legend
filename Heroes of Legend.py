@@ -3,6 +3,8 @@ import random
 
 class Character:
 
+    rerolls = 3
+
     def __init__(self, race = [], culture = "", cuMod = 0, social = "",
                  solMod = 0, familyHead = "", siblings = 0, illSiblings = 0,
                  relations = [], birthplace = "", biMod = 0):
@@ -17,6 +19,16 @@ class Character:
         self.relations = relations #other relations
         self.birthplace = birthplace
         self.biMod = biMod
+
+def reroll(function, character):
+    """Takes the function argument, prints the result, and offers a reroll (if available)"""
+    result = function()
+    print(result)
+    if int(character.rerolls) > 0:
+        if input("You have "+str(character.rerolls)+" rerolls reminaing. Reroll this result? y/n: ")[0] == "y":
+            character.rerolls -= 1
+            reroll(function, character)
+    return result
 
 def rollDice(numDice, typeDice):
     """Rolls numDice of typeDice"""
@@ -340,45 +352,45 @@ def table105b(character, foreigner):
     diceRoll = rollDice(1, 20)
     print (diceRoll)
     if 1 <= diceRoll <= 6:
-        character.birthPlace = "In the character's family home "
+        character.birthplace = "In the character's family home "
         character.biMod = 2
 
     elif diceRoll == 7:
-        character.birthPlace = "In a friend's home "
+        character.birthplace = "In a friend's home "
         character.biMod = 2
 
     elif diceRoll == 8:
-        character.birthPlace = "In a hospital or healer's guild hall "
+        character.birthplace = "In a hospital or healer's guild hall "
         character.biMod = 0
 
     elif diceRoll == 9:
-        character.birthPlace = "In a voyaging ship "
+        character.birthplace = "In a voyaging ship "
         character.biMod = 8
 
     elif diceRoll == 10:
-        character.birthPlace = "In a carriage or wagon while travelling "
+        character.birthplace = "In a carriage or wagon while travelling "
         character.biMod = 8
 
     elif diceRoll == 11:
-        character.birthPlace = "In a common barn "
+        character.birthplace = "In a common barn "
         character.biMod = 8
 
     elif 12 <= diceRoll <= 13:
         if not foreigner:
             table105b(character, True)
-            character.birthPlace += "in a foreign land."
+            character.birthplace += "in a foreign land."
             character.biMod += 5
 
     elif diceRoll == 14:
-        character.birthPlace = "In a cave "
+        character.birthplace = "In a cave "
         character.biMod = 10
 
     elif diceRoll == 15:
-        character.birthPlace = "In the middle of a field "
+        character.birthplace = "In the middle of a field "
         character.biMod = 8
 
     elif diceRoll == 16:
-        character.birthPlace = "In a forest "
+        character.birthplace = "In a forest "
         character.birthMod = 9
 
     else:
@@ -400,7 +412,7 @@ def table105c(character):
 
     elif diceRoll == 4:
         battleRoll = rollDice(1, 6)
-        print ("battleRoll: " + battleRoll)
+        print ("battleRoll: " + str(battleRoll))
         if battleRoll == 6:
             character.birthplace += "On a battlefield "
             character.biMod += 15
@@ -532,6 +544,7 @@ def table747(character):
     else:
         #Roll twice on this table and combine the result in an imaginatve way
         pass
+
 
 def main():
     character = Character()
